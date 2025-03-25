@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-const themes = ['light', 'dark'] as const;
+const themes = ['dark', 'light'] as const;
 const themeClassNamePrefix = 'dx-swatch-';
 
 type Theme = typeof themes[number];
