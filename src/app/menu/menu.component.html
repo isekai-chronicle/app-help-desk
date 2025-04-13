@@ -1,0 +1,567 @@
+<div class="wrapper">
+  <div class="title">
+    <h2>{{ translate.title.word }}</h2>
+  </div>
+
+  <div class="body dx-card responsive-paddings">
+    <div class="button-info">
+      <div class="information-left">
+        <span>Role:</span>
+        <dx-drop-down-box
+          [deferRendering]="false"
+          [showClearButton]="true"
+          valueExpr="role_id"
+          displayExpr="role_name"
+          [dataSource]="dsRoleCombo"
+          [(value)]="dsRoleComboValue"
+          [(opened)]="isClose"
+          [dropDownOptions]="option"
+          [disabled]="!isCheckRole"
+          (onOptionChanged)="onOptionChanged_dropDown_role($event)"
+          height="25px"
+          [width]="300"
+        >
+          <div *dxTemplate="let data of 'content'">
+            <dx-data-grid
+              [dataSource]="dsRoleCombo"
+              [columns]="gridColumns"
+              [hoverStateEnabled]="true"
+              [filterRow]="{ visible: true }"
+              [selection]="{ mode: 'single' }"
+              [scrolling]="{ mode: 'virtual' }"
+              [height]="400"
+              [width]="800"
+              [(selectedRowKeys)]="dsRoleComboValue"
+            >
+              <dxo-selection mode="multiple"></dxo-selection>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+
+      <div class="information-left-roleCheck">
+        <dx-check-box
+          (onValueChanged)="onValueChanged_onClick_role($event)"
+          [(value)]="isCheckRole"
+          [height]="25"
+          [width]="150"
+          [text]="translate.btnCheckRole.word"
+          [value]="false"
+        ></dx-check-box>
+      </div>
+
+      <div class="information-left">
+        <span>User:</span>
+        <dx-drop-down-box
+          [deferRendering]="false"
+          [showClearButton]="true"
+          valueExpr="user_id"
+          displayExpr="user_name"
+          [dataSource]="dsUser"
+          [(value)]="dsUserComboValue"
+          [(opened)]="isCloseUser"
+          [dropDownOptions]="optionUser"
+          [disabled]="!isCheckUser"
+          (onOptionChanged)="onOptionChanged_dropDown_user($event)"
+          height="25px"
+          [width]="300"
+        >
+          <div *dxTemplate="let data of 'content'">
+            <dx-data-grid
+              [dataSource]="dsUser"
+              [columns]="gridColumnsUser"
+              [hoverStateEnabled]="true"
+              [filterRow]="{ visible: true }"
+              [selection]="{ mode: 'single' }"
+              [scrolling]="{ mode: 'virtual' }"
+              [height]="400"
+              [width]="800"
+              [(selectedRowKeys)]="dsUserComboValue"
+            >
+              <dxo-selection mode="multiple"></dxo-selection>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+
+      <div class="information-left-roleCheck">
+        <dx-check-box
+          (onValueChanged)="onValueChanged_onClick_user($event)"
+          [(value)]="isCheckUser"
+          [height]="25"
+          [width]="150"
+          [text]="translate.btnCheckUser.word"
+          [value]="false"
+        ></dx-check-box>
+      </div>
+
+      <dx-button
+        stylingMode="contained"
+        type="default"
+        [width]="30"
+        [height]="30"
+        [icon]="icon.search"
+        [hint]="translate.btnSearch.word"
+        (onClick)="onClick_button_search()"
+      >
+      </dx-button>
+
+      <dx-button
+        stylingMode="contained"
+        type="default"
+        [width]="30"
+        [height]="30"
+        [icon]="icon.add"
+        [hint]="translate.btnAdd.word"
+        [visible]="translate.btnAdd.visible"
+        [disabled]="translate.btnAdd.disabled"
+        (onClick)="onClick_button_add()"
+      >
+      </dx-button>
+
+      <dx-button
+        stylingMode="contained"
+        type="default"
+        [width]="30"
+        [height]="30"
+        [icon]="icon.save"
+        [hint]="translate.btnSaved.word"
+        [visible]="translate.btnSaved.visible"
+        [disabled]="translate.btnSaved.disabled"
+        (onClick)="onClick_button_save()"
+      >
+      </dx-button>
+    </div>
+    <div class="content-accordion">
+      <dx-accordion
+        [items]="dsMenu"
+        [collapsible]="true"
+        [multiple]="true"
+        [animationDuration]="300"
+        width="100%"
+        height="auto"
+      >
+        <div *dxTemplate="let menu of 'title'">
+          <div class="accordion-header">
+            <div class="header-title">
+              <span>{{ menu.menu_name }}</span>
+            </div>
+            <div class="header-actions">
+              <dx-button
+                icon="edit"
+                type="default"
+                [width]="22"
+                [height]="22"
+                (onClick)="onClick_button_edit($event, menu)"
+              ></dx-button>
+              <dx-button
+                icon="plus"
+                type="default"
+                [width]="22"
+                [height]="22"
+                (onClick)="onClick_button_add_menu($event, menu)"
+              ></dx-button>
+            </div>
+          </div>
+        </div>
+
+        <div *dxTemplate="let menu of 'item'">
+          <dx-accordion
+            [items]="menu.menudatas"
+            [collapsible]="true"
+            [multiple]="true"
+            [animationDuration]="200"
+            height="auto"
+          >
+            <div *dxTemplate="let sub of 'title'">
+              <div class="accordion-header">
+                {{ sub.menuData_name }}
+                <div class="header-actions" (click)="$event.stopPropagation()">
+                  <dx-button
+                    icon="edit"
+                    type="default"
+                    [width]="22"
+                    [height]="22"
+                    (onClick)="onClick_button_edit_menuData($event, sub, menu)"
+                  ></dx-button>
+                  <dx-button
+                    icon="plus"
+                    type="default"
+                    [width]="22"
+                    [height]="22"
+                    (onClick)="onClick_button_add_menuData($event, menu, sub)"
+                  ></dx-button>
+                </div>
+              </div>
+            </div>
+            <div *dxTemplate="let sub of 'item'">
+              <dx-data-grid
+                class="dx-card"
+                width="100%"
+                height="100%"
+                [dataSource]="sub.componentDatas"
+                [showBorders]="false"
+                [focusedRowEnabled]="true"
+                [focusedRowIndex]="0"
+                [columnAutoWidth]="true"
+                [showColumnHeaders]="false"
+                [scrolling]="{ mode: 'virtual' }"
+              >
+                <dxi-column
+                  [alignment]="'center'"
+                  dataField="isCheck"
+                  caption="Active "
+                  [allowEditing]="false"
+                  [width]="90"
+                  cellTemplate="contentIsCheck"
+                ></dxi-column>
+
+                <div class="buttons" *dxTemplate="let data of 'contentIsCheck'">
+                  <dx-check-box
+                    [(value)]="data.data.isCheck"
+                    [readOnly]="false"
+                    (onValueChanged)="onValueChanged_assigned(data.data)"
+                  ></dx-check-box>
+
+                  <!-- <dx-check-box
+                    [(value)]="data.data.isActive"
+                    [readOnly]="false"
+                    (onValueChanged)="
+                      onCheckboxChanged($event.value, data.data, sub)
+                    "
+                  ></dx-check-box> -->
+                </div>
+                <dxi-column
+                  dataField="menuData_name_component"
+                  caption="Name"
+                ></dxi-column>
+
+                <dxi-column
+                  [allowEditing]="false"
+                  [allowFiltering]="true"
+                  [allowSorting]="false"
+                  cellTemplate="cellTemplateTagButton"
+                  [width]="190"
+                  [caption]="translate.colTag.word"
+                  [alignment]="'center'"
+                >
+                </dxi-column>
+                <div *dxTemplate="let data of 'cellTemplateTagButton'">
+                  <dx-tag-box
+                    [height]="25"
+                    placeholder=""
+                    [dataSource]="dsTagBox"
+                    [value]="data.data.id"
+                    [inputAttr]="{ 'aria-label': 'Button' }"
+                    [grouped]="true"
+                    displayExpr="name"
+                  >
+                  </dx-tag-box>
+                </div>
+              </dx-data-grid>
+            </div>
+          </dx-accordion>
+        </div>
+      </dx-accordion>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+@if(config.isPopupVisible){
+<dx-popup
+  [width]="config.popupWidth"
+  [height]="config.popupHeight"
+  [showTitle]="true"
+  [title]="translate.popupTitle.word"
+  [dragEnabled]="true"
+  [hideOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [visible]="config.isPopupVisible"
+  (onHidden)="onHidden_popup()"
+>
+  <div class="modal-container">
+    <div
+      class="modal-content"
+      [ngClass]="{ disabled: config.isView && !config.isEdit }"
+    >
+      <dx-form
+        id="form"
+        #gForm
+        [formData]="gMenuTemp"
+        validationGroup="customerData"
+        labelLocation="left"
+        [showColonAfterLabel]="true"
+      >
+        <dxi-item dataField="menu_name" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            [message]="translate.valName.word"
+          ></dxi-validation-rule>
+          <dxo-label
+            [template]="translate.colName.word"
+            alignment="right"
+          ></dxo-label>
+        </dxi-item>
+      </dx-form>
+    </div>
+
+    <div class="modal-button">
+      <dx-button
+        [text]="translate.btnConfirm.word"
+        [width]="120"
+        [height]="30"
+        [disabled]="config.isLoadingPanel"
+        type="success"
+        [disabled]="config.isView"
+        class="btn-custom-margin-right"
+        (onClick)="onClick_button_confirm()"
+        aria-hidden="false"
+      >
+      </dx-button>
+    </div>
+  </div>
+</dx-popup>
+
+}
+
+<!-- MODAL -->
+@if(config.isPopupAddMenuVisible){
+<dx-popup
+  [width]="config.popupAddMenuWidth"
+  [height]="config.popupAddMenuHeight"
+  [showTitle]="true"
+  [title]="translate.popupAddMenuTitle.word"
+  [dragEnabled]="true"
+  [hideOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [visible]="config.isPopupAddMenuVisible"
+  (onHidden)="onHidden_popup()"
+>
+  <div class="modal-container">
+    <div
+      class="modal-content"
+      [ngClass]="{ disabled: config.isView && !config.isEdit }"
+    >
+      <dx-form
+        id="formMenu"
+        #gFormAddMenu
+        [formData]="gAddMenuTemp"
+        validationGroup="customerData"
+        labelLocation="left"
+        [showColonAfterLabel]="true"
+      >
+        <dxi-item dataField="menuData_name" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            [message]="translate.valName.word"
+          ></dxi-validation-rule>
+          <dxo-label
+            [template]="translate.colName.word"
+            alignment="right"
+          ></dxo-label>
+        </dxi-item>
+
+        <dxi-item dataField="menuData_displayName" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            [message]="translate.valDisplayName.word"
+          ></dxi-validation-rule>
+          <dxo-label
+            [template]="translate.colDisplayName.word"
+            alignment="right"
+          ></dxo-label>
+        </dxi-item>
+
+        <dxi-item
+          dataField="menuData_id_root"
+          editorType="dxLookup"
+          [editorOptions]="{
+          dataSource: dsComboMenuData,
+          displayExpr: 'menuData_name_root',
+          valueExpr: 'menuData_id_root',
+          onValueChanged: onValueChanged_lookup_menuData,
+          searchEnabled: true,
+          showClearButton: true,
+        }"
+        >
+          <dxo-label
+            [template]="translate.colMenuData.word"
+            alignment="right"
+          ></dxo-label>
+        </dxi-item>
+      </dx-form>
+    </div>
+
+    <div class="modal-button">
+      <dx-button
+        [text]="translate.btnConfirm.word"
+        [width]="120"
+        [height]="30"
+        [disabled]="config.isLoadingPanel"
+        type="success"
+        [disabled]="config.isView"
+        class="btn-custom-margin-right"
+        (onClick)="onClick_button_confirm_AddMenu()"
+        aria-hidden="false"
+      >
+      </dx-button>
+    </div>
+  </div>
+</dx-popup>
+
+}
+
+<!-- ADD MENU DATA (PASAR DE UN LADO PARA OTRO EN LA GRILLA) -->
+
+@if(config.ispopupAddSubMenuDataVisible){
+
+<dx-popup
+  [width]="config.popupAddSubMenuDataWidth"
+  [height]="config.popupAddSubMenuDataHeight"
+  [showTitle]="true"
+  [title]="translate.popupAddSubMenuDataTitle.word"
+  [dragEnabled]="true"
+  [hideOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [visible]="config.ispopupAddSubMenuDataVisible"
+  (onHidden)="onHidden_popup()"
+>
+  <div class="modal-container">
+    <div
+      class="modal-content"
+      [ngClass]="{ disabled: config.isView && !config.isEdit }"
+    >
+      <div class="body-top">
+        <div class="assigned">
+          <div>
+            <dx-button
+              stylingMode="contained"
+              type="danger"
+              aria-hidden="false"
+              [icon]="icon.arrowright"
+              [hint]="translate.btnAssigned.word"
+              [width]="80"
+              (onClick)="onClick_button_unAssigned()"
+            >
+            </dx-button>
+          </div>
+          <div>
+            Assigned
+            <dx-data-grid
+              id="gridCover"
+              [dataSource]="dsMenuAssigned.assignedMenu"
+              [showBorders]="true"
+              [hoverStateEnabled]="true"
+              [rowAlternationEnabled]="true"
+              [scrolling]="{ mode: 'virtual' }"
+              width="100%"
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+              <dxi-column
+                [alignment]="'center'"
+                dataField="menuData_name_component"
+                caption="Name"
+                [allowEditing]="false"
+              ></dxi-column>
+
+              <dxi-column
+                [alignment]="'center'"
+                dataField="isCheck"
+                caption="Select"
+                [allowEditing]="false"
+                [width]="90"
+                cellTemplate="contentIsCheck"
+              ></dxi-column>
+
+              <div class="buttons" *dxTemplate="let data of 'contentIsCheck'">
+                <dx-check-box [(value)]="data.data.isCheck"></dx-check-box>
+              </div>
+            </dx-data-grid>
+          </div>
+        </div>
+
+        <div class="unAssigned">
+          <div>
+            <dx-button
+              stylingMode="contained"
+              type="success"
+              [icon]="icon.arrowleft"
+              [hint]="translate.btnUnAssigned.word"
+              [width]="80"
+              (onClick)="onClick_button_assigned()"
+            >
+            </dx-button>
+          </div>
+          <div>
+            UnAssigned
+            <dx-data-grid
+              id="gridCover"
+              [dataSource]="dsMenuAssigned.unAssignedMenu"
+              [showBorders]="true"
+              [hoverStateEnabled]="true"
+              [rowAlternationEnabled]="true"
+              [scrolling]="{ mode: 'virtual' }"
+              width="100%"
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+              <dxi-column
+                [alignment]="'center'"
+                dataField="isCheck"
+                caption="Select"
+                [allowEditing]="false"
+                [width]="90"
+                cellTemplate="contentIsCheck"
+              ></dxi-column>
+
+              <div class="buttons" *dxTemplate="let data of 'contentIsCheck'">
+                <dx-check-box [(value)]="data.data.isCheck"></dx-check-box>
+              </div>
+
+              <dxi-column
+                [alignment]="'center'"
+                dataField="menuData_name_component"
+                caption="Name"
+                [allowEditing]="false"
+              ></dxi-column>
+            </dx-data-grid>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-button">
+      <dx-button
+        [text]="translate.btnConfirm.word"
+        [width]="120"
+        [height]="30"
+        [disabled]="config.isLoadingPanel"
+        type="success"
+        [disabled]="config.isView"
+        class="btn-custom-margin-right"
+        (onClick)="onClick_button_confirm_subMenuAdd()"
+        aria-hidden="false"
+      >
+      </dx-button>
+    </div>
+  </div>
+</dx-popup>
+}
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#wrapper' }"
+  [(visible)]="config.isLoadingPanel"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [hideOnOutsideClick]="false"
+>
+</dx-load-panel>

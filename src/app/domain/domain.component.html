@@ -1,0 +1,253 @@
+<div class="wrapper">
+  <div class="title">
+    <h2>{{ translate.title.word }}</h2>
+  </div>
+
+  <div class="body dx-card responsive-paddings">
+    <div class="button-info">
+      <dx-button
+        stylingMode="contained"
+        type="default"
+        [width]="30"
+        [height]="30"
+        [icon]="icon.search"
+        [hint]="translate.btnSearch.word"
+        (onClick)="LoadInfo()"
+      >
+      </dx-button>
+
+      <dx-button
+        stylingMode="contained"
+        type="default"
+        [width]="30"
+        [height]="30"
+        [icon]="icon.add"
+        [hint]="translate.btnAdd.word"
+        [visible]="translate.btnAdd.visible"
+        [disabled]="translate.btnAdd.disabled"
+        (onClick)="onClick_button_add()"
+      >
+      </dx-button>
+
+      <!-- SYSTEM-TRANSLATE START -->
+      <div class="button-translate">
+        <dx-button
+          stylingMode="contained"
+          type="default"
+          [width]="30"
+          [height]="30"
+          [icon]="icon.translate"
+          [hint]="translate.btnTranslate.word"
+          [visible]="translate.btnTranslate.visible"
+          (onClick)="onClick_button_translate()"
+        >
+        </dx-button>
+      </div>
+      <!-- SYSTEM-TRANSLATE END -->
+    </div>
+
+    <dx-data-grid
+      class="dx-card"
+      width="100%"
+      height="100%"
+      [dataSource]="dsDomian"
+      [showBorders]="false"
+      [focusedRowEnabled]="true"
+      [focusedRowIndex]="0"
+      [columnAutoWidth]="true"
+      [keyExpr]="'id'"
+      [scrolling]="{ mode: 'virtual' }"
+    >
+      <!-- <dxo-row-dragging
+          [allowReordering]="true"
+          [onReorder]="onReorder"
+          [showDragIcons]="true"
+        ></dxo-row-dragging> -->
+
+      <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+      <dxi-column
+        [width]="config.buttonColumnWidth"
+        [allowFiltering]="false"
+        [allowSorting]="false"
+        cellTemplate="cellTemplateButton"
+        [alignment]="'center'"
+        [fixed]="true"
+      >
+      </dxi-column>
+      <div *dxTemplate="let data of 'cellTemplateButton'">
+        <dx-button
+          class="btn-custom-margin-right"
+          type="success"
+          aria-hidden="false"
+          [icon]="icon.view"
+          [hint]="translate.btnView.word"
+          [width]="20"
+          [height]="20"
+          [visible]="data.data.isView"
+          (onClick)="onClick_button_view(data.data)"
+        >
+        </dx-button>
+
+        <dx-button
+          class="btn-custom-margin-right"
+          type="default"
+          aria-hidden="false"
+          [icon]="icon.edit"
+          [hint]="translate.btnEdit.word"
+          [width]="20"
+          [height]="20"
+          [visible]="data.data.isEdit && !data.data.isCancel"
+          (onClick)="onClick_button_edit(data.data)"
+        >
+        </dx-button>
+
+        <dx-button
+          class="btn-custom-margin-right"
+          type="danger"
+          aria-hidden="false"
+          [icon]="icon.delete"
+          [hint]="translate.btnDelete.word"
+          [width]="20"
+          [height]="20"
+          [visible]="
+            data.data.isDelete && data.data.isEdit && !data.data.isCancel
+          "
+          (onClick)="onClick_button_delete(data.data)"
+        >
+        </dx-button>
+
+        <dx-button
+          class="btn-custom-margin-right"
+          type="success"
+          aria-hidden="false"
+          [text]="translate.btnConfirmDelete.word"
+          [hint]="translate.btnConfirmDelete.word"
+          [width]="140"
+          [height]="20"
+          [visible]="data.data.isConfirmDelete"
+          (onClick)="onClick_button_confirmDelete(data.data)"
+        >
+        </dx-button>
+        <dx-button
+          class="btn-custom-margin-right"
+          type="danger"
+          aria-hidden="false"
+          [icon]="icon.cancel"
+          [hint]="translate.btnCancel.word"
+          [width]="20"
+          [height]="20"
+          [visible]="data.data.isCancel"
+          (onClick)="onClick_button_cancel(data.data)"
+        >
+        </dx-button>
+      </div>
+      <dxi-column
+        dataField="hashtag"
+        [width]="200"
+        [caption]="translate.colHashtag.word"
+        [alignment]="'center'"
+      >
+      </dxi-column>
+
+      <dxi-column
+        dataField="name"
+        [width]="400"
+        [caption]="translate.colName.word"
+      >
+      </dxi-column>
+    </dx-data-grid>
+  </div>
+</div>
+
+<!-- MODAL -->
+@if(config.isPopupVisible){
+<dx-popup
+  [width]="config.popupWidth"
+  [height]="config.popupHeight"
+  [showTitle]="true"
+  [title]="translate.popupTitle.word"
+  [dragEnabled]="true"
+  [hideOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [visible]="config.isPopupVisible"
+  (onHidden)="onHidden_popup()"
+>
+  <div class="modal-container">
+    <div
+      class="modal-content"
+      [ngClass]="{ disabled: config.isView && !config.isEdit }"
+    >
+      <dx-form
+        id="form"
+        #gForm
+        [formData]="gDomainTemp"
+        validationGroup="customerData"
+        labelLocation="left"
+        [showColonAfterLabel]="true"
+      >
+        <dxi-item dataField="name" editorType="dxTextBox">
+          <dxi-validation-rule
+            type="required"
+            [message]="translate.valName.word"
+          ></dxi-validation-rule>
+          <dxo-label
+            [template]="translate.colName.word"
+            alignment="right"
+          ></dxo-label>
+        </dxi-item>
+      </dx-form>
+    </div>
+
+    <div class="modal-button">
+      <dx-button
+        [text]="translate.btnConfirm.word"
+        [width]="120"
+        [height]="30"
+        [disabled]="config.isLoadingPanel"
+        type="success"
+        [disabled]="config.isView"
+        class="btn-custom-margin-right"
+        (onClick)="onClick_button_confirm()"
+        aria-hidden="false"
+      >
+      </dx-button>
+    </div>
+  </div>
+</dx-popup>
+
+}
+
+<!-- #SYSTEM-TRANSLATE START-->
+@if(config.isPopupDictionaryVisible){
+<dx-popup
+  [width]="config.popupDictionaryWidth"
+  [height]="config.popupDictionaryHeight"
+  [showTitle]="true"
+  [title]="translate.popupTitleDictionary.word"
+  [dragEnabled]="true"
+  [hideOnOutsideClick]="false"
+  [showCloseButton]="true"
+  [visible]="config.isPopupDictionaryVisible"
+  (onHidden)="onHidden_popup()"
+>
+  <!-- <app-dictionary
+                  [component_name]="component_name"
+                  [component_area]="component_area"
+                  [word]="translate"
+                ></app-dictionary> -->
+</dx-popup>
+}
+<!-- #SYSTEM-TRANSLATE END-->
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#wrapper' }"
+  [(visible)]="config.isLoadingPanel"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [hideOnOutsideClick]="false"
+>
+</dx-load-panel>

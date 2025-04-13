@@ -1,0 +1,49 @@
+<div class="wrapper">
+  <video id="video-id" [src]="gsrc" class="background" type="video/mp4"></video>
+  <dx-button icon="expandform" class="btn-maximize" (onClick)="onClick_maximize()"></dx-button>
+  <div class="login" [class.error]="isError">
+    <form action="" class="form">
+      <img src="../../../assets/image/logoHickory.png" alt="logo" class="img-logo" />
+
+      <div class="inputs" [class.error]="isErrorProfile">
+        <div class="box">
+          <input type="text" [placeholder]="translate.labUser.word" required class="input"
+            [(ngModel)]="dsUserProfile.userName" [ngModelOptions]="{ standalone: true }" />
+          <i class="ri-user-fill"></i>
+        </div>
+        @if (isPasswordAlert == true && this.dsUserProfile.userName == '') {
+        <label class="alert-user" [class.error]="isUserAlert">{{
+          gMessage
+          }}</label>
+        }
+        <div class="box">
+          <input type="password" id="user-password" [placeholder]="translate.labPassword.word" required class="input"
+            [(ngModel)]="dsUserProfile.password" [ngModelOptions]="{ standalone: true }" />
+          <i class="ri-lock-2-fill"></i>
+        </div>
+        @if (isPasswordAlert == true && this.dsUserProfile.password == '') {
+        <label class="alert-pass" [class.error]="isPasswordAlert">{{
+          gMessage
+          }}</label>
+        }
+      </div>
+
+      <!-- <div class="check"> pendiente habilitar
+        <a href="#" class="forgot">Forgot Password?</a>
+      </div> -->
+      <br />
+      <br />
+      <button (mousedown)="mousedown_submit(true)" type="submit" class="button" (click)="click_submit(false)"
+        [class.active]="isSubmitted">
+        {{translate.btnLogin.word}}
+      </button>
+      @if ((this.dsUserProfile.userName != '' || this.dsUserProfile.password !=
+      '') && isLoginAlert && !isUserAlert && !isPasswordAlert) {
+      <p class="alert-login" [class.error]="isLoginAlert">Wrong Credentials!</p>
+      }
+      <!-- <div class="register"> pendiente habilitar
+        Don't have an account? <a href="#">Register</a>
+      </div> -->
+    </form>
+  </div>
+</div>

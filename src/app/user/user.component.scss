@@ -1,0 +1,118 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(32, 1fr);
+  grid-template-rows: repeat(32, 1fr);
+  padding: 10px;
+  width: 100%;
+  height: 830px;
+  // padding: 20px 40px;
+
+  .title {
+    grid-area: 1/ 1 / 3 / 33;
+    width: 100%;
+    height: 100%;
+
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+    }
+  }
+
+  .body {
+    grid-area: 3/ 1 / 33 / 33;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .button-info {
+      width: 100%;
+      height: 30px;
+      display: flex;
+      gap: 10px;
+    }
+  }
+}
+
+.modal-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+
+  .modal-userName {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .custom-editor {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-name {
+    margin: 10px;
+  }
+  .custom-editor dx-text-box {
+    margin-right: 10px;
+  }
+
+  .info-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    //justify-content: space-between;
+    margin: 10px;
+
+    .info-box {
+      margin: 5px;
+    }
+
+    .info-botton-content {
+      width: 340px;
+      height: 60px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      justify-content: flex-end;
+
+      .info-botton-content-text {
+        font-size: 36px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .modal-button {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  // border-radius: 4px;
+  // border: dashed 2px #61acf6;
+}
+
+.btn-custom-margin-right {
+  margin-right: 5px;
+}
+
+//SYSTEM-TRANSLATE START
+.button-translate {
+  margin-left: auto; // Mueve solo el botón de Translate al extremo derecho
+}
+//SYSTEM-TRANSLATE END

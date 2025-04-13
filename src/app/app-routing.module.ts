@@ -1,61 +1,86 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-  LoginFormComponent,
-  ResetPasswordFormComponent,
-  CreateAccountFormComponent,
-  ChangePasswordFormComponent,
-} from './shared/components';
+// import {
+//   LoginFormComponent,
+//   ResetPasswordFormComponent,
+//   CreateAccountFormComponent,
+//   ChangePasswordFormComponent,
+// } from './shared/components';
+
 import { AuthGuardService } from './shared/services';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
-import { DxDataGridModule, DxFormModule } from 'devextreme-angular';
 import { CommonModule } from '@angular/common';
 
 import {
+  DxFormModule,
+  DxDataGridModule,
+  DxDropDownBoxModule,
+  DxPopupModule,
   DxButtonModule,
-  DxListModule,
-  DxTemplateModule,
+  DxSpeedDialActionModule,
+  DxLoadPanelModule,
+  DxCheckBoxModule,
+  DxChartModule,
   DxScrollViewModule,
-  DxTileViewModule,
-  DxSortableModule,
+  DxDateBoxModule,
+  DxTextBoxModule,
+  DxValidatorModule,
+  DxRadioGroupModule,
+  DxTabsModule,
+  DxPivotGridModule,
+  DxContextMenuModule,
+  DxNumberBoxModule,
+  DxTabPanelModule,
+  DxTagBoxModule,
+  DxAccordionModule,
+  DxLookupModule,
 } from 'devextreme-angular';
+import { UserComponent } from './user/user.component';
+import { PathsComponent } from './paths/paths.component';
+import { RoleComponent } from './role/role.component';
+import { DomainComponent } from './domain/domain.component';
+import { MenuComponent } from './menu/menu.component';
+import { AreaComponent } from './area/area.component';
+import { ComponentComponent } from './component/component.component';
 
 const routes: Routes = [
   {
-    path: 'tasks',
-    component: TasksComponent,
+    path: 'menu',
+    component: MenuComponent,
     canActivate: [AuthGuardService],
   },
   {
-    path: 'profile',
-    component: ProfileComponent,
+    path: 'area',
+    component: AreaComponent,
     canActivate: [AuthGuardService],
   },
   {
-    path: 'home',
-    component: HomeComponent,
-    //canActivate: [ AuthGuardService ]
+    path: 'user',
+    component: UserComponent,
+    canActivate: [AuthGuardService],
   },
+
   {
-    path: 'login-form',
-    component: LoginFormComponent,
+    path: 'path',
+    component: PathsComponent,
     canActivate: [AuthGuardService],
   },
   {
-    path: 'reset-password',
-    component: ResetPasswordFormComponent,
+    path: 'role',
+    component: RoleComponent,
+    canActivate: [AuthGuardService],
+  },
+
+  {
+    path: 'domain',
+    component: DomainComponent,
     canActivate: [AuthGuardService],
   },
   {
-    path: 'create-account',
-    component: CreateAccountFormComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'change-password/:recoveryCode',
-    component: ChangePasswordFormComponent,
+    path: 'component',
+    component: ComponentComponent,
     canActivate: [AuthGuardService],
   },
   {
@@ -67,18 +92,43 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { useHash: true }),
-    DxDataGridModule,
-    DxScrollViewModule,
-    DxFormModule,
-    DxButtonModule,
-    DxListModule,
-    DxTemplateModule,
     CommonModule,
-    DxTileViewModule,
-    DxSortableModule,
+    DxDataGridModule,
+    DxDropDownBoxModule,
+    DxPopupModule,
+    DxButtonModule,
+    DxSpeedDialActionModule,
+    DxLoadPanelModule,
+    DxCheckBoxModule,
+    DxChartModule,
+    DxScrollViewModule,
+    DxDateBoxModule,
+    DxTextBoxModule,
+    DxValidatorModule,
+    DxRadioGroupModule,
+    DxTabsModule,
+    DxPivotGridModule,
+    DxContextMenuModule,
+    DxNumberBoxModule,
+    DxTabPanelModule,
+    DxFormModule,
+    DxTagBoxModule,
+    DxAccordionModule,
+    DxLookupModule,
   ],
   providers: [AuthGuardService],
   exports: [RouterModule],
-  declarations: [HomeComponent, ProfileComponent, TasksComponent],
+  declarations: [
+    HomeComponent,
+    ProfileComponent,
+    TasksComponent,
+    UserComponent,
+    PathsComponent,
+    RoleComponent,
+    DomainComponent,
+    MenuComponent,
+    AreaComponent,
+    ComponentComponent,
+  ],
 })
 export class AppRoutingModule {}

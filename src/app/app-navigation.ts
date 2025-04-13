@@ -1,21 +1,38 @@
 export const navigation = [
   {
-    text: 'Home',
-    path: '/home',
-    icon: 'home'
+    text: 'Menu',
+    path: '/menu',
+    icon: 'home',
+  },
+
+  {
+    text: 'User',
+    path: '/user',
+    icon: 'user',
   },
   {
-    text: 'Examples',
+    text: 'Role',
+    path: '/role',
+    icon: 'group',
+  },
+  {
+    text: 'Area',
+    path: '/area',
+    icon: 'map',
+  },
+  {
+    text: 'Domain',
+    path: '/domain',
+    icon: 'globe',
+  },
+  {
+    text: 'Component',
+    path: '/component',
     icon: 'folder',
-    items: [
-      {
-        text: 'Profile',
-        path: '/profile'
-      },
-      {
-        text: 'Tasks',
-        path: '/tasks'
-      }
-    ]
-  }
+  },
+  {
+    text: 'Paths',
+    path: '/paths',
+    icon: 'path',
+  },
 ];
