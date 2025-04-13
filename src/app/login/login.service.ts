@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './user.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Subject, throwError } from 'rxjs';
-import { environment } from './../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 const AUTHENTICATION_API = environment.apiHelpDeskUrl;
 

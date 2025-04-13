@@ -108,8 +108,12 @@ export class AuthService {
   }
 
   async logOut() {
-    this._user = null;
-    this.router.navigate(['/login-form']);
+    // let userId = this.gAccess.access;
+    // this.sMenu
+    //   .PostLogOut('b0d03c06-e23d-4166-85a3-85efc992510b')
+    //   .subscribe({});
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }
 

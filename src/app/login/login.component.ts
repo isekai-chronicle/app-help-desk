@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../login/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { AuthenticationService } from '../../shared/services/authentication.service';
+//import { AuthenticationService } from '../../shared/services/authentication.service';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -155,7 +156,9 @@ export class LoginComponent implements OnInit {
               1
             );
 
-            this.router.navigate(['/menu-master']);
+            this.sAuthentication.SetUser();
+
+            this.router.navigate(['/user']);
           } else {
             this.gMessage = this.translate.valCredential.word;
 

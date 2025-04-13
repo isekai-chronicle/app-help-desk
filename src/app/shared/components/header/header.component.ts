@@ -1,4 +1,11 @@
-import { Component, NgModule, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  NgModule,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthService, IUser } from '../../services';
@@ -7,14 +14,13 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 
 import { Router } from '@angular/router';
-import {ThemeSwitcherModule} from "../theme-switcher/theme-switcher.component";
+import { ThemeSwitcherModule } from '../theme-switcher/theme-switcher.component';
 @Component({
   selector: 'app-header',
   templateUrl: 'header.component.html',
   styleUrls: ['./header.component.scss'],
-  standalone: false
+  standalone: false,
 })
-
 export class HeaderComponent implements OnInit {
   @Output()
   menuToggle = new EventEmitter<boolean>();
@@ -27,30 +33,32 @@ export class HeaderComponent implements OnInit {
 
   user: IUser | null = { email: '' };
 
-  userMenuItems = [{
-    text: 'Profile',
-    icon: 'user',
-    onClick: () => {
-      this.router.navigate(['/profile']);
-    }
-  },
-  {
-    text: 'Logout',
-    icon: 'runner',
-    onClick: () => {
-      this.authService.logOut();
-    }
-  }];
+  userMenuItems = [
+    {
+      text: 'Profile',
+      icon: 'user',
+      onClick: () => {
+        this.router.navigate(['/profile']);
+      },
+    },
+    {
+      text: 'Logout',
+      icon: 'runner',
+      onClick: () => {
+        this.authService.logOut();
+      },
+    },
+  ];
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.authService.getUser().then((e) => this.user = e.data);
+    this.authService.getUser().then((e) => (this.user = e.data));
   }
 
   toggleMenu = () => {
     this.menuToggle.emit();
-  }
+  };
 }
 
 @NgModule({
@@ -61,7 +69,7 @@ export class HeaderComponent implements OnInit {
     DxToolbarModule,
     ThemeSwitcherModule,
   ],
-  declarations: [ HeaderComponent ],
-  exports: [ HeaderComponent ]
+  declarations: [HeaderComponent],
+  exports: [HeaderComponent],
 })
-export class HeaderModule { }
+export class HeaderModule {}

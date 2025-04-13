@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { DxHttpModule } from 'devextreme-angular/http';
 import {
@@ -8,11 +9,9 @@ import {
   SideNavInnerToolbarModule,
   SingleCardModule,
 } from './layouts';
-
 import { AuthService, ScreenService, AppInfoService } from './shared/services';
-import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
+import { authenticationInterceptor } from './shared/interceptors/authentication.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,11 +21,15 @@ import { provideHttpClient } from '@angular/common/http';
     SideNavOuterToolbarModule,
     SideNavInnerToolbarModule,
     SingleCardModule,
-    CommonModule,
-    UnauthenticatedContentModule,
+
     AppRoutingModule,
   ],
-  providers: [AuthService, ScreenService, AppInfoService, provideHttpClient()],
+  providers: [
+    AuthService,
+    ScreenService,
+    AppInfoService,
+    provideHttpClient(withInterceptors([authenticationInterceptor])),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

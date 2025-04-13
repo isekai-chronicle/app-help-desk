@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-// import {
-//   LoginFormComponent,
-//   ResetPasswordFormComponent,
-//   CreateAccountFormComponent,
-//   ChangePasswordFormComponent,
-// } from './shared/components';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from './shared/services';
-import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { CommonModule } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
 
 import {
   DxFormModule,
@@ -37,6 +32,7 @@ import {
   DxAccordionModule,
   DxLookupModule,
 } from 'devextreme-angular';
+
 import { UserComponent } from './user/user.component';
 import { PathsComponent } from './paths/paths.component';
 import { RoleComponent } from './role/role.component';
@@ -45,47 +41,53 @@ import { MenuComponent } from './menu/menu.component';
 import { AreaComponent } from './area/area.component';
 import { ComponentComponent } from './component/component.component';
 
+import { LoginComponent } from './login/login.component';
+import { noAuthenticationGuard } from './shared/guards/noAuthentication.guard';
+
+import { authenticationGuard } from './shared/guards/authentication.guard';
+
 const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
   {
     path: 'area',
     component: AreaComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
 
   {
     path: 'path',
     component: PathsComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
   {
     path: 'role',
     component: RoleComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
 
   {
     path: 'domain',
     component: DomainComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
   {
     path: 'component',
     component: ComponentComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [authenticationGuard],
   },
   {
-    path: '**',
-    redirectTo: 'home',
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [noAuthenticationGuard],
   },
 ];
 
@@ -115,11 +117,12 @@ const routes: Routes = [
     DxTagBoxModule,
     DxAccordionModule,
     DxLookupModule,
+    DxFormModule,
+    FormsModule,
   ],
   providers: [AuthGuardService],
   exports: [RouterModule],
   declarations: [
-    HomeComponent,
     ProfileComponent,
     TasksComponent,
     UserComponent,
@@ -129,6 +132,7 @@ const routes: Routes = [
     MenuComponent,
     AreaComponent,
     ComponentComponent,
+    LoginComponent,
   ],
 })
 export class AppRoutingModule {}

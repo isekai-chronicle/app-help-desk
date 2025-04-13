@@ -32,7 +32,7 @@ export const navigation = [
   },
   {
     text: 'Paths',
-    path: '/paths',
-    icon: 'path',
+    path: '/path',
+    icon: 'description',
   },
 ];

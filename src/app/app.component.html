@@ -1,9 +1,10 @@
-<ng-container *ngIf="isAuthenticated(); else unauthenticated">
-  <app-side-nav-outer-toolbar title="{{appInfo.title}}">
-    <router-outlet></router-outlet>
-  </app-side-nav-outer-toolbar>
-</ng-container>
+@if(isAuthenticated()){
+<app-side-nav-outer-toolbar title="{{ appInfo.title }}">
+  <router-outlet></router-outlet>
+</app-side-nav-outer-toolbar>
+} @else{
+<div class="wrapper">
+  <router-outlet></router-outlet>
+</div>
 
-<ng-template #unauthenticated>
-  <app-unauthenticated-content></app-unauthenticated-content>
-</ng-template>
+}
