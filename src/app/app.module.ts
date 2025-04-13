@@ -8,13 +8,7 @@ import {
   SideNavInnerToolbarModule,
   SingleCardModule,
 } from './layouts';
-import {
-  FooterModule,
-  ResetPasswordFormModule,
-  CreateAccountFormModule,
-  ChangePasswordFormModule,
-  LoginFormModule,
-} from './shared/components';
+
 import { AuthService, ScreenService, AppInfoService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
@@ -28,12 +22,7 @@ import { provideHttpClient } from '@angular/common/http';
     SideNavOuterToolbarModule,
     SideNavInnerToolbarModule,
     SingleCardModule,
-    FooterModule,
     CommonModule,
-    ResetPasswordFormModule,
-    CreateAccountFormModule,
-    ChangePasswordFormModule,
-    LoginFormModule,
     UnauthenticatedContentModule,
     AppRoutingModule,
   ],
