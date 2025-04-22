@@ -21,12 +21,7 @@ export class MenuService {
     return this.http.get(`${AUTH_API}/api/User/GetCombo`);
   }
 
-  // Get() {
-  //   return this.http.get(`${AUTH_API}/api/Menu/Get`);
-  // }
-
   GetMenu(employee_id: any) {
-    console.log(employee_id, 'get menu services');
     return this.http.get(`${AUTH_API}/api/Menu/Get?user_id=${employee_id}`);
   }
 
@@ -49,7 +44,6 @@ export class MenuService {
   PostMenu(data: any) {
     console.log(data, 'post menu services');
 
-    //    return of([]);
     return this.http.post(`${AUTH_API}/api/Menu/PostMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
@@ -57,9 +51,6 @@ export class MenuService {
 
   PostMenuData(data: any) {
     console.log(data, 'post services');
-
-    //    return of([]);
-
     return this.http.post(`${AUTH_API}/api/Menu/PostMenuData`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
@@ -68,7 +59,6 @@ export class MenuService {
   PutMenuData(data: any) {
     console.log(data, 'putMenuData services');
 
-    // return of([]);
     return this.http.put(`${AUTH_API}/api/Menu/PutMenuData`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
@@ -76,7 +66,6 @@ export class MenuService {
   }
   Put(data: any) {
     console.log(data, 'put services');
-    // return of([]);
 
     return this.http.put(`${AUTH_API}/api/Menu/PutMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -85,7 +74,6 @@ export class MenuService {
 
   PutMenuDataComponent(data: any) {
     console.log(data, 'PutMenuDataComponent services');
-    //return of([]);
 
     return this.http.put(`${AUTH_API}/api/Menu/PutMenuDataComponent`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -94,12 +82,9 @@ export class MenuService {
 
   PostMenuComponent(data: any) {
     console.log(data, 'PostMenuComponent services');
-    //return of([]);
 
     return this.http.post(`${AUTH_API}/api/Authentication/PostMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
-
-    ///api/Authentication/PostMenu
   }
 }

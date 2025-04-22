@@ -212,7 +212,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.gSubscription$ = this.sAuthententication.gAccess$.subscribe(
       (data: any) => {
-        console.log(data, 'dat');
         this.config.keys = data.tasks;
       }
     );

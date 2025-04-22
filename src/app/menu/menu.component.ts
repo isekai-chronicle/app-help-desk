@@ -148,6 +148,7 @@ export class MenuComponent implements OnInit {
   //#endregion GRID
 
   dsTagBox: any[] | [] = [];
+  assignedMenuData: any[] = [];
 
   isClose: boolean | any = false;
   isCloseUser: boolean | any = false;
@@ -203,8 +204,6 @@ export class MenuComponent implements OnInit {
       }
     );
 
-    //this.LoadInfo();
-
     this.LoadCombo();
 
     this.dsTagBox = [
@@ -218,25 +217,6 @@ export class MenuComponent implements OnInit {
   }
 
   //#region  METHOD
-
-  // LoadInfo() {
-  //   this.config.isLoadingPanel = true;
-
-  //   this.sMenu.Get().subscribe({
-  //     next: (data: any) => {
-  //       console.log(data, 'data ');
-  //       this.dsMenu.splice(0, this.dsMenu.length, ...data);
-  //       //this.dsMenu = data;
-  //     },
-  //     complete: () => {
-  //       this.config.isLoadingPanel = false;
-  //     },
-  //     error: (error: any) => {
-  //       this.config.isLoadingPanel = false;
-  //       this.sNotify.ErrorMessage(error);
-  //     },
-  //   });
-  // }
 
   LoadCombo() {
     this.LoadComboUser();
@@ -253,10 +233,11 @@ export class MenuComponent implements OnInit {
 
   //#region  SEARCH
   onClick_button_search() {
+    this.config.isLoadingPanel = true;
+
     if (this.dsUserComboValue.length > 0) {
       this.sMenu.GetMenu(this.dsUserComboValue[0]).subscribe({
         next: (data: any) => {
-          console.log(data, 'data en search menu');
           this.dsMenu = data;
         },
         complete: () => {
@@ -482,13 +463,9 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  onValueChanged_onClick_role(event: any) {
-    console.log(event, 'role');
-  }
+  onValueChanged_onClick_role(event: any) {}
 
   onValueChanged_onClick_user(event: any) {
-    console.log(event.value, 'user');
-
     this.config.isDisabledComboUser = event.value.length > 0 ? false : true;
   }
 
@@ -555,7 +532,6 @@ export class MenuComponent implements OnInit {
 
         this.dsMenuDataAssigned = [
           {
-            //menuData_id: this.gMenuData_id,
             menuData_id: subMenu,
             components: data.link.map((item: any) => ({
               menuData_id_component: item.menuData_id_component,
@@ -602,8 +578,6 @@ export class MenuComponent implements OnInit {
         (menu: any) => menu.menuData_id_component
       );
 
-      console.log('Removing', removeIds);
-
       this.dsMenuDataAssigned = this.dsMenuDataAssigned.map((menu: any) => {
         if (menu.menuData_id === this.gMenuData_id) {
           const updatedComponents = menu.components.filter(
@@ -616,8 +590,6 @@ export class MenuComponent implements OnInit {
         }
         return menu;
       });
-
-      console.log(this.dsMenuDataAssigned, 'desasignado DATA SOURCE');
 
       this.dsMenuAssigned.unAssignedMenu = [
         ...this.dsMenuAssigned.unAssignedMenu,
@@ -666,8 +638,6 @@ export class MenuComponent implements OnInit {
         });
       }
 
-      console.log(this.dsMenuDataAssigned, 'asignado DATA SOURCE');
-
       this.dsMenuAssigned.assignedMenu = [
         ...this.dsMenuAssigned.assignedMenu,
         ...selectedMenus,
@@ -688,10 +658,6 @@ export class MenuComponent implements OnInit {
   }
 
   // onCheckboxChanged(newValue: boolean, row: any, sub: any) {
-  //   //  console.log(sub.menuData_id, 'sub en checkbox');
-  //   console.log(newValue, 'newValue en checkbox');
-  //   console.log(row, 'row en checkbox');
-  //   console.log(sub, 'sub en checkbox');
 
   //   const id = row.component_id;
   //   if (newValue) {
@@ -752,8 +718,6 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  assignedMenuData: any[] = [];
-
   onValueChanged_assigned(rowData: any) {
     const userId = this.dsUserComboValue[0];
     const taskId = this.config.keys.filter((x: any) => x.list === 'Daily')[0]
@@ -764,8 +728,6 @@ export class MenuComponent implements OnInit {
       component_id: rowData.component_id,
       task_id: taskId,
     };
-
-    console.log(newRecord, 'assignedMenu_component');
 
     if (rowData.isCheck) {
       const found = this.assignedMenuData.some(
@@ -779,8 +741,6 @@ export class MenuComponent implements OnInit {
         (item) => item.component_id !== rowData.component_id
       );
     }
-
-    console.log(this.assignedMenuData, 'assignedMenu_component');
   }
 
   // onValueChanged_assigned(data: any) {
@@ -799,13 +759,10 @@ export class MenuComponent implements OnInit {
   // }
 
   onClick_button_save() {
-    console.log('Entra aca');
     this.config.isLoadingPanel = true;
 
     this.sMenu.PostMenuComponent(this.assignedMenuData).subscribe({
-      next: (data: any) => {
-        console.log(data, 'data en post menu component');
-      },
+      next: (data: any) => {},
       complete: () => {
         this.config.isLoadingPanel = false;
       },
