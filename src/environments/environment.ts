@@ -1,4 +1,4 @@
 export const environment = {
   isProduction: true,
-  apiHelpDeskUrl: 'https://hub.hickorydr.com/api-help-desk',
+  apiHelpDeskUrl: 'https://sistema.hickorydr.com/api-help-desk',
 };

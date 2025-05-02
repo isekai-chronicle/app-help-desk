@@ -4,140 +4,145 @@
   </div>
 
   <div class="body dx-card responsive-paddings">
-    <div class="button-info">
-      <div class="information-left">
-        <span>Role:</span>
-        <dx-drop-down-box
-          [deferRendering]="false"
-          [showClearButton]="true"
-          valueExpr="role_id"
-          displayExpr="role_name"
-          [dataSource]="dsRoleCombo"
-          [(value)]="dsRoleComboValue"
-          [(opened)]="isClose"
-          [dropDownOptions]="option"
-          [disabled]="!isCheckRole"
-          (onOptionChanged)="onOptionChanged_dropDown_role($event)"
-          height="25px"
-          [width]="300"
+    <div class="header">
+      <div class="button-info">
+        <div class="information-left">
+          <span>Role:</span>
+          <dx-drop-down-box
+            [deferRendering]="false"
+            [showClearButton]="true"
+            valueExpr="role_id"
+            displayExpr="role_name"
+            [dataSource]="dsRoleCombo"
+            [(value)]="dsRoleComboValue"
+            [(opened)]="isClose"
+            [dropDownOptions]="option"
+            [disabled]="!isCheckRole"
+            (onOptionChanged)="onOptionChanged_dropDown_role($event)"
+            height="25px"
+            [width]="300"
+          >
+            <div *dxTemplate="let data of 'content'">
+              <dx-data-grid
+                [dataSource]="dsRoleCombo"
+                [columns]="gridColumns"
+                [hoverStateEnabled]="true"
+                [filterRow]="{ visible: true }"
+                [selection]="{ mode: 'single' }"
+                [scrolling]="{ mode: 'virtual' }"
+                [height]="400"
+                [width]="800"
+                [(selectedRowKeys)]="dsRoleComboValue"
+              >
+                <dxo-selection mode="multiple"></dxo-selection>
+              </dx-data-grid>
+            </div>
+          </dx-drop-down-box>
+        </div>
+
+        <div class="information-left-roleCheck">
+          <dx-check-box
+            (onValueChanged)="onValueChanged_onClick_role($event)"
+            [(value)]="isCheckRole"
+            [height]="25"
+            [width]="150"
+            [text]="translate.btnCheckRole.word"
+            [value]="false"
+          ></dx-check-box>
+        </div>
+
+        <div class="information-left">
+          <span>User:</span>
+          <dx-drop-down-box
+            [deferRendering]="false"
+            [showClearButton]="true"
+            valueExpr="user_id"
+            displayExpr="user_name"
+            [dataSource]="dsUser"
+            [(value)]="dsUserComboValue"
+            [(opened)]="isCloseUser"
+            [dropDownOptions]="optionUser"
+            [disabled]="!isCheckUser"
+            (onOptionChanged)="onOptionChanged_dropDown_user($event)"
+            height="25px"
+            [width]="300"
+          >
+            <div *dxTemplate="let data of 'content'">
+              <dx-data-grid
+                [dataSource]="dsUser"
+                [columns]="gridColumnsUser"
+                [hoverStateEnabled]="true"
+                [filterRow]="{ visible: true }"
+                [selection]="{ mode: 'single' }"
+                [scrolling]="{ mode: 'virtual' }"
+                [height]="400"
+                [width]="800"
+                [(selectedRowKeys)]="dsUserComboValue"
+              >
+                <dxo-selection mode="multiple"></dxo-selection>
+              </dx-data-grid>
+            </div>
+          </dx-drop-down-box>
+        </div>
+
+        <div class="information-left-roleCheck">
+          <dx-check-box
+            (onValueChanged)="onValueChanged_onClick_user($event)"
+            [(value)]="isCheckUser"
+            [height]="25"
+            [width]="150"
+            [text]="translate.btnCheckUser.word"
+            [value]="false"
+          ></dx-check-box>
+        </div>
+
+        <dx-button
+          stylingMode="contained"
+          type="default"
+          [width]="30"
+          [height]="30"
+          [icon]="icon.search"
+          [hint]="translate.btnSearch.word"
+          (onClick)="onClick_button_search()"
         >
-          <div *dxTemplate="let data of 'content'">
-            <dx-data-grid
-              [dataSource]="dsRoleCombo"
-              [columns]="gridColumns"
-              [hoverStateEnabled]="true"
-              [filterRow]="{ visible: true }"
-              [selection]="{ mode: 'single' }"
-              [scrolling]="{ mode: 'virtual' }"
-              [height]="400"
-              [width]="800"
-              [(selectedRowKeys)]="dsRoleComboValue"
-            >
-              <dxo-selection mode="multiple"></dxo-selection>
-            </dx-data-grid>
-          </div>
-        </dx-drop-down-box>
-      </div>
+        </dx-button>
 
-      <div class="information-left-roleCheck">
-        <dx-check-box
-          (onValueChanged)="onValueChanged_onClick_role($event)"
-          [(value)]="isCheckRole"
-          [height]="25"
-          [width]="150"
-          [text]="translate.btnCheckRole.word"
-          [value]="false"
-        ></dx-check-box>
-      </div>
-
-      <div class="information-left">
-        <span>User:</span>
-        <dx-drop-down-box
-          [deferRendering]="false"
-          [showClearButton]="true"
-          valueExpr="user_id"
-          displayExpr="user_name"
-          [dataSource]="dsUser"
-          [(value)]="dsUserComboValue"
-          [(opened)]="isCloseUser"
-          [dropDownOptions]="optionUser"
-          [disabled]="!isCheckUser"
-          (onOptionChanged)="onOptionChanged_dropDown_user($event)"
-          height="25px"
-          [width]="300"
+        <dx-button
+          stylingMode="contained"
+          type="default"
+          [width]="30"
+          [height]="30"
+          [icon]="icon.add"
+          [hint]="translate.btnAdd.word"
+          [visible]="translate.btnAdd.visible"
+          [disabled]="translate.btnAdd.disabled"
+          (onClick)="onClick_button_add()"
         >
-          <div *dxTemplate="let data of 'content'">
-            <dx-data-grid
-              [dataSource]="dsUser"
-              [columns]="gridColumnsUser"
-              [hoverStateEnabled]="true"
-              [filterRow]="{ visible: true }"
-              [selection]="{ mode: 'single' }"
-              [scrolling]="{ mode: 'virtual' }"
-              [height]="400"
-              [width]="800"
-              [(selectedRowKeys)]="dsUserComboValue"
-            >
-              <dxo-selection mode="multiple"></dxo-selection>
-            </dx-data-grid>
-          </div>
-        </dx-drop-down-box>
+        </dx-button>
+
+        <dx-button
+          stylingMode="contained"
+          type="default"
+          [width]="30"
+          [height]="30"
+          [icon]="icon.save"
+          [hint]="translate.btnSaved.word"
+          [visible]="translate.btnSaved.visible"
+          [disabled]="translate.btnSaved.disabled || config.isDisabledSave"
+          (onClick)="onClick_button_save()"
+        >
+        </dx-button>
       </div>
-
-      <div class="information-left-roleCheck">
-        <dx-check-box
-          (onValueChanged)="onValueChanged_onClick_user($event)"
-          [(value)]="isCheckUser"
-          [height]="25"
-          [width]="150"
-          [text]="translate.btnCheckUser.word"
-          [value]="false"
-        ></dx-check-box>
-      </div>
-
-      <dx-button
-        stylingMode="contained"
-        type="default"
-        [width]="30"
-        [height]="30"
-        [icon]="icon.search"
-        [hint]="translate.btnSearch.word"
-        (onClick)="onClick_button_search()"
-      >
-      </dx-button>
-
-      <dx-button
-        stylingMode="contained"
-        type="default"
-        [width]="30"
-        [height]="30"
-        [icon]="icon.add"
-        [hint]="translate.btnAdd.word"
-        [visible]="translate.btnAdd.visible"
-        [disabled]="translate.btnAdd.disabled"
-        (onClick)="onClick_button_add()"
-      >
-      </dx-button>
-
-      <dx-button
-        stylingMode="contained"
-        type="default"
-        [width]="30"
-        [height]="30"
-        [icon]="icon.save"
-        [hint]="translate.btnSaved.word"
-        [visible]="translate.btnSaved.visible"
-        [disabled]="translate.btnSaved.disabled"
-        (onClick)="onClick_button_save()"
-      >
-      </dx-button>
     </div>
+
     <div class="content-accordion">
       <dx-accordion
+        #outerAccordion
+        keyExpr="menu_id"
         [items]="dsMenu"
-        [collapsible]="true"
+        [collapsible]="false"
         [multiple]="true"
-        [animationDuration]="300"
+        [animationDuration]="400"
         width="100%"
         height="auto"
       >
@@ -167,11 +172,13 @@
 
         <div *dxTemplate="let menu of 'item'">
           <dx-accordion
+            keyExpr="menuData_id"
             [items]="menu.menudatas"
             [collapsible]="true"
             [multiple]="true"
             [animationDuration]="200"
             height="auto"
+            [(selectedItems)]="expandedItems"
           >
             <div *dxTemplate="let sub of 'title'">
               <div class="accordion-header">
@@ -220,20 +227,19 @@
                   <dx-check-box
                     [(value)]="data.data.isCheck"
                     [readOnly]="false"
-                    (onValueChanged)="onValueChanged_assigned(data.data)"
-                  ></dx-check-box>
-
-                  <!-- <dx-check-box
-                    [(value)]="data.data.isActive"
-                    [readOnly]="false"
                     (onValueChanged)="
-                      onCheckboxChanged($event.value, data.data, sub)
+                      onValueChanged_assigned(data.data, sub.componentDatas)
                     "
-                  ></dx-check-box> -->
+                  ></dx-check-box>
                 </div>
                 <dxi-column
                   dataField="menuData_name_component"
                   caption="Name"
+                  [width]="700"
+                  [allowEditing]="false"
+                  [allowFiltering]="true"
+                  [allowSorting]="false"
+                  [caption]="translate.colMenuName_component.word"
                 ></dxi-column>
 
                 <dxi-column
@@ -241,20 +247,28 @@
                   [allowFiltering]="true"
                   [allowSorting]="false"
                   cellTemplate="cellTemplateTagButton"
-                  [width]="190"
+                  [width]="250"
                   [caption]="translate.colTag.word"
                   [alignment]="'center'"
                 >
                 </dxi-column>
                 <div *dxTemplate="let data of 'cellTemplateTagButton'">
                   <dx-tag-box
-                    [height]="25"
                     placeholder=""
-                    [dataSource]="dsTagBox"
-                    [value]="data.data.id"
+                    [dataSource]="data.data.componentDataObjects"
                     [inputAttr]="{ 'aria-label': 'Button' }"
-                    [grouped]="true"
-                    displayExpr="name"
+                    displayExpr="componentObject_name"
+                    [(value)]="data.data.componentObjects_id"
+                    valueExpr="componentObject_id"
+                    [showSelectionControls]="true"
+                    [multiline]="true"
+                    [searchEnabled]="true"
+                    [height]="'auto'"
+                    [showClearButton]="true"
+                    [focusStateEnabled]="true"
+                    (onValueChanged)="
+                      onValueChanged_add_button($event.value, data.data)
+                    "
                   >
                   </dx-tag-box>
                 </div>

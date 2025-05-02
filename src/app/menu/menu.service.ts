@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 
-import { of } from 'rxjs';
-
 const AUTH_API = environment.apiHelpDeskUrl;
 
 @Injectable({
@@ -42,47 +40,35 @@ export class MenuService {
   }
 
   PostMenu(data: any) {
-    console.log(data, 'post menu services');
-
     return this.http.post(`${AUTH_API}/api/Menu/PostMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   PostMenuData(data: any) {
-    console.log(data, 'post services');
     return this.http.post(`${AUTH_API}/api/Menu/PostMenuData`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   PutMenuData(data: any) {
-    console.log(data, 'putMenuData services');
-
     return this.http.put(`${AUTH_API}/api/Menu/PutMenuData`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
-    //    return of([]);
   }
   Put(data: any) {
-    console.log(data, 'put services');
-
     return this.http.put(`${AUTH_API}/api/Menu/PutMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   PutMenuDataComponent(data: any) {
-    console.log(data, 'PutMenuDataComponent services');
-
     return this.http.put(`${AUTH_API}/api/Menu/PutMenuDataComponent`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   PostMenuComponent(data: any) {
-    console.log(data, 'PostMenuComponent services');
-
     return this.http.post(`${AUTH_API}/api/Authentication/PostMenu`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });

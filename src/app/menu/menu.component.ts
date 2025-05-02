@@ -39,6 +39,7 @@ export class MenuComponent implements OnInit {
     popupAddSubMenuDataWidth: 800,
     popupAddSubMenuDataHeight: 520,
     buttonColumnWidth: 130,
+    isDisabledSave: true,
     keys: [],
   };
 
@@ -85,6 +86,11 @@ export class MenuComponent implements OnInit {
     colDisplayName: { word: '_Display Name', disabled: false, visible: true },
     colMenuData: { word: '_Menu Data', disabled: false, visible: true },
     colTag: { word: '_Tag', disabled: false, visible: true },
+    colMenuName_component: {
+      word: '_Menu Name',
+      disabled: false,
+      visible: true,
+    },
     valName: { word: '_Name is required', disabled: false, visible: true },
     valDisplayName: {
       word: '_Display Name is required',
@@ -147,7 +153,7 @@ export class MenuComponent implements OnInit {
 
   //#endregion GRID
 
-  dsTagBox: any[] | [] = [];
+  //  dsTagBox: any[] | [] = [];
   assignedMenuData: any[] = [];
 
   isClose: boolean | any = false;
@@ -187,6 +193,8 @@ export class MenuComponent implements OnInit {
   isCheckRole: boolean = false;
   isCheckUser: boolean = false;
 
+  expandedItems: number[] = [];
+
   constructor(
     private sMenu: MenuService,
     private sNotify: NotifyService,
@@ -205,15 +213,6 @@ export class MenuComponent implements OnInit {
     );
 
     this.LoadCombo();
-
-    this.dsTagBox = [
-      { id: 1, name: 'btnEdit' },
-      { id: 2, name: 'btnAdd' },
-      { id: 3, name: 'btnDelete' },
-      { id: 4, name: 'btnView' },
-      { id: 5, name: 'btnCancel' },
-      { id: 6, name: 'btnSave' },
-    ];
   }
 
   //#region  METHOD
@@ -228,6 +227,9 @@ export class MenuComponent implements OnInit {
       next: (data: any) => {
         this.dsUser = this.ngLoadDataCombo(data, 'user_id');
       },
+      error: (error: any) => {
+        this.sNotify.ErrorMessage(error);
+      },
     });
   }
 
@@ -235,13 +237,19 @@ export class MenuComponent implements OnInit {
   onClick_button_search() {
     this.config.isLoadingPanel = true;
 
+    let user_id = this.dsUserComboValue[0];
+
     if (this.dsUserComboValue.length > 0) {
-      this.sMenu.GetMenu(this.dsUserComboValue[0]).subscribe({
+      this.sMenu.GetMenu(user_id).subscribe({
         next: (data: any) => {
-          this.dsMenu = data;
+          if (JSON.stringify(this.dsMenu) !== JSON.stringify(data)) {
+            this.dsMenu = data;
+          }
+          //this.dsMenu = data;
         },
         complete: () => {
           this.config.isLoadingPanel = false;
+          this.config.isDisabledSave = false;
         },
         error: (error: any) => {
           this.config.isLoadingPanel = false;
@@ -257,6 +265,9 @@ export class MenuComponent implements OnInit {
       next: (data: any) => {
         this.dsRoleCombo = this.ngLoadDataCombo(data, 'role_id');
       },
+      error: (error: any) => {
+        this.sNotify.ErrorMessage(error);
+      },
     });
   }
 
@@ -267,6 +278,9 @@ export class MenuComponent implements OnInit {
     this.sMenu.GetComboMenuData(this.gMenu_id).subscribe({
       next: (data: any) => {
         this.dsComboMenuData = data;
+      },
+      error: (error: any) => {
+        this.sNotify.ErrorMessage(error);
       },
     });
   }
@@ -297,6 +311,7 @@ export class MenuComponent implements OnInit {
   onOptionChanged_dropDown_user(e: DxDropDownBoxTypes.OptionChangedEvent) {
     if (e.name === 'value') {
       this.dsUserComboValue = e.value;
+      this.config.isDisabledSave = true;
       //this.dsMenu = [];
     }
 
@@ -562,8 +577,8 @@ export class MenuComponent implements OnInit {
         this.config.ispopupAddSubMenuDataVisible = false;
         //this.LoadInfo();
       },
-      error: (err: any) => {
-        console.error('err', err);
+      error: (error: any) => {
+        this.sNotify.ErrorMessage(error);
       },
     });
   }
@@ -657,120 +672,38 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  // onCheckboxChanged(newValue: boolean, row: any, sub: any) {
-
-  //   const id = row.component_id;
-  //   if (newValue) {
-  //     this.pendingToAssign = this.pendingToAssign.filter(
-  //       (x) => x.component_id !== id
-  //     );
-  //     if (
-  //       !this.isAlreadyAssigned(id) &&
-  //       !this.pendingToAssign.some((x) => x.component_id === id)
-  //     ) {
-  //       this.pendingToAssign.push({ component_id: id });
-  //     } else {
-  //       this.pendingToUnassign = this.pendingToUnassign.filter(
-  //         (x) => x.component_id !== id
-  //       );
-  //       if (
-  //         this.isAlreadyAssigned(id) &&
-  //         !this.pendingToUnassign.some((x) => x.component_id === id)
-  //       ) {
-  //         this.pendingToUnassign.push({ component_id: id });
-  //       }
-  //     }
-  //   }
-
-  //   console.log('Asignar:', this.pendingToAssign);
-  //   console.log('Quitar:', this.pendingToUnassign);
-
-  //   // if (newValue) {
-  //   //   this.pendingToUnassign = this.pendingToUnassign.filter(
-  //   //     (x) => x.menuData_id_component !== id
-  //   //   );
-
-  //   //   if (
-  //   //     !this.isAlreadyAssigned(id) &&
-  //   //     !this.pendingToAssign.some((x) => x.menuData_id_component === id)
-  //   //   ) {
-  //   //     this.pendingToAssign.push({ menuData_id_component: id });
-  //   //   }
-  //   // } else {
-  //   //   this.pendingToAssign = this.pendingToAssign.filter(
-  //   //     (x) => x.menuData_id_component !== id
-  //   //   );
-
-  //   //   if (
-  //   //     this.isAlreadyAssigned(id) &&
-  //   //     !this.pendingToUnassign.some((x) => x.menuData_id_component === id)
-  //   //   ) {
-  //   //     this.pendingToUnassign.push({ menuData_id_component: id });
-  //   //   }
-  //   // }
-
-  //   //* this.SendAssignedMenu(this.pendingToAssign);
-  // }
-
-  isAlreadyAssigned(id: number): boolean {
-    return this.dsMenuAssigned.assignedMenu.some(
-      (x: any) => x.component_id === id
-    );
-  }
-
-  onValueChanged_assigned(rowData: any) {
-    const userId = this.dsUserComboValue[0];
-    const taskId = this.config.keys.filter((x: any) => x.list === 'Daily')[0]
-      .keyList;
-
-    const newRecord = {
-      user_id: userId,
-      component_id: rowData.component_id,
-      task_id: taskId,
-    };
-
-    if (rowData.isCheck) {
-      const found = this.assignedMenuData.some(
-        (item) => item.component_id === rowData.component_id
-      );
-      if (!found) {
-        this.assignedMenuData.push(newRecord);
-      }
-    } else {
-      this.assignedMenuData = this.assignedMenuData.filter(
-        (item) => item.component_id !== rowData.component_id
-      );
-    }
-  }
-
-  // onValueChanged_assigned(data: any) {
-  //   let dataMenu = {
-  //     assignedMenu_component: data.component_id,
-  //     task_id: this.config.keys.filter((x: any) => x.list == 'Daily')[0]
-  //       .keyList,
-  //     user_id: this.dsUserComboValue[0],
-  //   };
-
-  //   console.log(dataMenu, 'assignedMenu_component');
-  // }
-
-  // SendAssignedMenu(event: any) {
-  //   //console.log(event, 'event en send assigned menu');
-  // }
-
   onClick_button_save() {
     this.config.isLoadingPanel = true;
 
-    this.sMenu.PostMenuComponent(this.assignedMenuData).subscribe({
+    const taskId = this.config.keys.filter((x: any) => x.list === 'Daily')[0]
+      .keyList;
+
+    const menu = this.dsMenu
+      .flatMap((menu) => menu.menudatas || []) // Nivel 1: menudatas
+      .flatMap((menuData) => menuData.componentDatas || []) // Nivel 2: componentDatas
+      .filter((component) => component.isCheck) // Filtrar por isCheck true
+      .map((component) => ({
+        name: component.menuData_name_component,
+        component_id: component.component_id,
+        user_id: this.dsUserComboValue[0],
+        task_id: taskId,
+        componentObjects_id: component.componentObjects_id,
+        isCheck: component.isCheck,
+      }));
+
+    this.sMenu.PostMenuComponent(menu).subscribe({
       next: (data: any) => {},
       complete: () => {
         this.config.isLoadingPanel = false;
       },
-
       error: (error: any) => {
         this.config.isLoadingPanel = false;
         this.sNotify.ErrorMessage(error);
       },
     });
   }
+
+  onValueChanged_assigned(rowData: any, sub: any) {}
+
+  onValueChanged_add_button(event: any, rowData: any) {}
 }
