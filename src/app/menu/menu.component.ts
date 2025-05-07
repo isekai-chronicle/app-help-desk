@@ -219,7 +219,7 @@ export class MenuComponent implements OnInit {
 
   LoadCombo() {
     this.LoadComboUser();
-    //this.LoadComboRole();
+    this.LoadComboRole();
   }
 
   LoadComboUser() {
