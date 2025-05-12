@@ -43,10 +43,10 @@ export class UserService {
   }
 
   Delete(data: any) {
-    // return this.http.delete(`${AUTH_API}/api/User/Delete`, {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    //   body: data,
-    // });
-    return of([]);
+    return this.http.delete(`${AUTH_API}/api/User/Delete`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: data,
+    });
+    //   return of([]);
   }
 }
